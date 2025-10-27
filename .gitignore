@@ -1,0 +1,34 @@
+# .gitignore para tu proyecto visualizacion
+NSL-KDD/
+# Entorno virtual
+venv/
+
+# Base de datos SQLite
+db.sqlite3
+
+# Archivos estáticos recolectados
+staticfiles/
+
+# Cache de Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Entornos
+.env
+.venv
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Jupyter notebooks (opcional - si no quieres subir el .ipynb)
+# 06_VisualizacionDel_DataSet.ipynb
+
+# Logs
+*.log
+
+# Archivos temporales
+*.tmp
+*.temp

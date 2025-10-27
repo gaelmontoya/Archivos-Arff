@@ -1,0 +1,50 @@
+{% extends "app_arff/base.html" %}
+
+{% block title %}Resultados - Visualizador ARFF{% endblock %}
+
+{% block content %}
+<div class="results-container">
+    <div class="results-header">
+        <h2>📈 Dataset Procesado</h2>
+        <a href="/" class="back-btn">← Subir otro archivo</a>
+    </div>
+    
+    <div class="dataset-info">
+        <div class="info-card">
+            <h3>Información del Dataset</h3>
+            <div id="datasetInfo" class="info-content">
+                <!-- Aquí va la info dinámica -->
+            </div>
+        </div>
+    </div>
+    
+    <div class="data-table-container">
+        <div class="table-header">
+            <h3>Vista previa de datos</h3>
+            <div class="table-controls">
+                <input type="text" id="searchInput" placeholder="Buscar en los datos..." class="search-input">
+                <span id="rowCount" class="row-count"></span>
+            </div>
+        </div>
+        
+        <div class="table-wrapper">
+            <table id="dataTable" class="data-table">
+                <thead id="tableHeader">
+                    <!-- Cabecera dinámica -->
+                </thead>
+                <tbody id="tableBody">
+                    <!-- Datos dinámicos -->
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="table-footer">
+            <p>Mostrando las primeras <strong id="shownRows">100</strong> filas de <strong id="totalRows">0</strong></p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/result.js"></script>
+{% endblock %}

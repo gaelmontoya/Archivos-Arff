@@ -1,0 +1,42 @@
+{% extends "app_arff/base.html" %}
+
+{% block title %}Subir ARFF - Visualizador{% endblock %}
+
+{% block content %}
+<div class="upload-container">
+    <div class="upload-card">
+        <div class="upload-icon">📁</div>
+        <h2>Sube tu archivo ARFF</h2>
+        <p class="upload-description">
+            Formatos soportados: <strong>.arff</strong><br>
+            Máximo: 10MB
+        </p>
+        
+        <form id="uploadForm" class="upload-form">
+            <div class="file-input-wrapper">
+                <input type="file" id="arffFile" accept=".arff" class="file-input">
+                <label for="arffFile" class="file-label">
+                    <span class="file-label-text">Seleccionar archivo</span>
+                    <span class="file-label-browse">Examinar</span>
+                </label>
+            </div>
+            
+            <div id="fileInfo" class="file-info hidden">
+                <span id="fileName" class="file-name"></span>
+                <button type="button" id="removeFile" class="remove-btn">×</button>
+            </div>
+            
+            <button type="submit" id="uploadBtn" class="upload-btn" disabled>
+                <span class="btn-text">Procesar ARFF</span>
+                <div class="loading-spinner hidden"></div>
+            </button>
+        </form>
+        
+        <div id="message" class="message hidden"></div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/upload.js"></script>
+{% endblock %}
