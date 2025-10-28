@@ -3,38 +3,53 @@
 {% block title %}Subir ARFF - Visualizador{% endblock %}
 
 {% block content %}
-<div class="upload-container">
-    <div class="upload-card">
-        <div class="upload-icon">📁</div>
-        <h2>Sube tu archivo ARFF</h2>
-        <p class="upload-description">
-            Formatos soportados: <strong>.arff</strong><br>
-            Máximo: 10MB
-        </p>
+<div style="max-width:480px; margin:4rem auto; padding:2.5rem; background:#f9f9f9; border-radius:16px; box-shadow:0 8px 20px rgba(0,0,0,0.1); text-align:center; font-family: 'Segoe UI', sans-serif;">
+    
+    <h2 style="margin-bottom:1rem; color:#222; font-size:1.75rem;">Archivo Arff</h2>
+    <p style="color:#555; font-size:0.95rem; margin-bottom:2rem;">
+        Formatos que se agregan: <strong>.arff</strong><br>
+        Tamaño: 100 MB
+    </p>
+
+    <form id="uploadForm" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
         
-        <form id="uploadForm" class="upload-form">
-            <div class="file-input-wrapper">
-                <input type="file" id="arffFile" accept=".arff" class="file-input">
-                <label for="arffFile" class="file-label">
-                    <span class="file-label-text">Seleccionar archivo</span>
-                    <span class="file-label-browse">Examinar</span>
-                </label>
-            </div>
-            
-            <div id="fileInfo" class="file-info hidden">
-                <span id="fileName" class="file-name"></span>
-                <button type="button" id="removeFile" class="remove-btn">×</button>
-            </div>
-            
-            <button type="submit" id="uploadBtn" class="upload-btn" disabled>
-                <span class="btn-text">Procesar ARFF</span>
-                <div class="loading-spinner hidden"></div>
+        <!-- Selector de archivo -->
+        <div style="margin-bottom:1.5rem; position:relative;">
+            <input type="file" id="arffFile" name="arffFile" accept=".arff" style="display:none;">
+            <label for="arffFile" 
+                   style="display:inline-block; width:100%; padding:0.85rem; background:#4f46e5; color:#fff; font-weight:600; border-radius:12px; cursor:pointer; transition:0.3s;">
+                Seleccionar archivo
+            </label>
+        </div>
+
+        <!-- Información del archivo -->
+        <div id="fileInfo" class="file-info hidden" style="margin-bottom:1rem; display:flex; justify-content:space-between; align-items:center; padding:0.5rem 0.75rem; background:#eef2ff; border-radius:8px; font-size:0.95rem; color:#333;">
+            <span id="fileName"></span>
+            <button type="button" id="removeFile" style="padding:0.25rem 0.5rem; background:#e0e0e0; border:none; border-radius:6px; cursor:pointer; transition:0.2s;">
+                ✕
             </button>
-        </form>
-        
-        <div id="message" class="message hidden"></div>
-    </div>
+        </div>
+
+        <!-- Botón de subir -->
+        <button type="submit" id="uploadBtn" disabled 
+                style="width:100%; padding:0.85rem; font-weight:600; border-radius:12px; background:#4f46e5; color:#fff; font-size:1rem; cursor:pointer; transition:0.3s; display:flex; justify-content:center; align-items:center; gap:0.5rem;">
+            Procesar ARFF
+            <div class="loading-spinner hidden" style="width:18px; height:18px; border:3px solid #fff; border-top-color:transparent; border-radius:50%; animation:spin 1s linear infinite;"></div>
+        </button>
+    </form>
+
+    <!-- Mensaje -->
+    <div id="message" class="message hidden" style="margin-top:1rem; font-size:0.95rem; color:#e53935;"></div>
 </div>
+
+<style>
+    /* Animación spinner */
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+</style>
 {% endblock %}
 
 {% block scripts %}
