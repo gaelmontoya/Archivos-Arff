@@ -1,6 +1,6 @@
-// Utilidades generales para toda la aplicación
+
 class AppUtils {
-    // Mostrar notificación
+   
     static showMessage(message, type = 'success') {
         const messageEl = document.getElementById('message');
         if (!messageEl) return;
@@ -9,18 +9,17 @@ class AppUtils {
         messageEl.className = `message ${type}`;
         messageEl.classList.remove('hidden');
 
-        // Auto-ocultar después de 5 segundos
+        
         setTimeout(() => {
             messageEl.classList.add('hidden');
         }, 5000);
     }
 
-    // Formatear números grandes
+    
     static formatNumber(num) {
         return new Intl.NumberFormat('es-ES').format(num);
     }
 
-    // Validar archivo ARFF
     static isValidARFFFile(file) {
         if (!file) return false;
         if (!file.name.toLowerCase().endsWith('.arff')) return false;
@@ -31,7 +30,7 @@ class AppUtils {
         return true;
     }
 
-    // Mostrar/ocultar loading
+   
     static setLoading(button, isLoading) {
         const btnText = button.querySelector('.btn-text');
         const spinner = button.querySelector('.loading-spinner');
@@ -48,7 +47,7 @@ class AppUtils {
     }
 }
 
-// Manejo de errores global - MÁS INFORMATIVO
+
 window.addEventListener('error', (event) => {
     console.error('❌ ERROR GLOBAL:', {
         message: event.message,
@@ -58,13 +57,13 @@ window.addEventListener('error', (event) => {
         error: event.error
     });
     
-    // Solo mostrar mensaje si no es un error de recurso (imágenes, etc.)
+   
     if (!event.filename.includes('.ico') && !event.filename.includes('.png')) {
         AppUtils.showMessage('Error en la aplicación. Revisa la consola para detalles.', 'error');
     }
 });
 
-// También capturar errores de promesas no manejadas
+
 window.addEventListener('unhandledrejection', (event) => {
     console.error('❌ PROMISE REJECTION:', event.reason);
     AppUtils.showMessage('Error en la aplicación. Revisa la consola para detalles.', 'error');

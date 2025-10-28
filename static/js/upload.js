@@ -100,22 +100,22 @@ class ARFFUploader {
             body: formData
         });
 
-        console.log('📡 DEBUG - Respuesta del servidor:', response.status, response.statusText);
+        console.log(' DEBUG - Respuesta del servidor:', response.status, response.statusText);
         
         // OBTENER EL TEXTO DEL ERROR
         const responseText = await response.text();
-        console.log('📄 DEBUG - Respuesta completa:', responseText);
+        console.log(' DEBUG - Respuesta completa:', responseText);
         
         let result;
         try {
             result = JSON.parse(responseText);
         } catch (e) {
-            console.error('❌ DEBUG - Error parseando JSON:', e);
+            console.error(' DEBUG - Error parseando JSON:', e);
             this.handleError('Respuesta inválida del servidor: ' + responseText);
             return;
         }
 
-        console.log('📊 DEBUG - Resultado parseado:', result);
+        console.log(' DEBUG - Resultado parseado:', result);
 
         if (response.ok && result.success) {
             this.handleSuccess(result);
@@ -123,14 +123,14 @@ class ARFFUploader {
             this.handleError(result.error || 'Error al procesar el archivo');
         }
     } catch (error) {
-        console.error('❌ DEBUG - Error de red:', error);
+        console.error(' DEBUG - Error de red:', error);
         this.handleError('Error de conexión. Intenta nuevamente.');
     } finally {
         AppUtils.setLoading(this.uploadBtn, false);
     }
 }
     handleSuccess(data) {
-        console.log('✅ DEBUG - Éxito, datos recibidos:', data);  // DEBUG
+        console.log('DEBUG - Éxito, datos recibidos:', data);  
         // Guardar datos en sessionStorage para la página de resultados
         sessionStorage.setItem('arffData', JSON.stringify(data));
         
@@ -139,7 +139,7 @@ class ARFFUploader {
     }
 
     handleError(errorMessage) {
-        console.error('❌ DEBUG - Error:', errorMessage);  // DEBUG
+        console.error('❌ DEBUG - Error:', errorMessage); 
         AppUtils.showMessage(errorMessage, 'error');
         this.clearFileSelection();
     }

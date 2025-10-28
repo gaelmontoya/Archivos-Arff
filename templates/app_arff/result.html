@@ -5,7 +5,7 @@
 {% block content %}
 <div class="results-container">
     <div class="results-header">
-        <h2>📈 Dataset Procesado</h2>
+        <h2>Dataset Procesado</h2>
         <a href="/" class="back-btn">← Subir otro archivo</a>
     </div>
     
@@ -13,7 +13,7 @@
         <div class="info-card">
             <h3>Información del Dataset</h3>
             <div id="datasetInfo" class="info-content">
-                <!-- Aquí va la info dinámica -->
+                <!-- Información dinámica -->
             </div>
         </div>
     </div>
@@ -39,7 +39,13 @@
         </div>
         
         <div class="table-footer">
-            <p>Mostrando las primeras <strong id="shownRows">100</strong> filas de <strong id="totalRows">0</strong></p>
+            <div style="text-align: center; margin-bottom: 1rem;">
+                <p>Mostrando filas <strong id="shownRows">-</strong> de <strong id="totalRows">0</strong></p>
+            </div>
+            
+            <div id="pagination" class="pagination-wrapper">
+                <!-- Controles de paginación dinámicos -->
+            </div>
         </div>
     </div>
 </div>

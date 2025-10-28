@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: subir-arff
+    env: python
+    plan: free
+    python:
+      version: 3.9.18
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn visualizacion.wsgi:application"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.9.18
