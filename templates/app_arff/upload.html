@@ -6,30 +6,28 @@
 <div class="upload-container">
     <div class="upload-card">
         <div class="upload-icon">📁</div>
-        <h1>ARFF</h1>
-        <h2>Sube el archivo arff</h2>
+        <h1 class="upload-title">Visualizador ARFF</h1>
+        <h2 class="upload-subtitle">Sube tu archivo .arff</h2>
+
         <p class="upload-description">
             Formatos soportados: <strong>.arff</strong><br>
-            Máximo: 10MB
+            Tamaño máximo: <strong>10MB</strong>
         </p>
 
-        <!-- Formulario funcional -->
         <form method="post" enctype="multipart/form-data" class="upload-form">
             {% csrf_token %}
             <div class="file-input-wrapper">
                 <input type="file" name="file" id="fileInput" accept=".arff" required hidden>
                 <label for="fileInput" class="file-label">
-                    Selección de un archivo
+                    Selecciona un archivo
                 </label>
                 <button type="button" class="browse-btn" onclick="document.getElementById('fileInput').click();">
                     Examinar
                 </button>
             </div>
 
-            <!-- Mostrar nombre del archivo -->
             <div id="fileNameDisplay" class="file-name"></div>
 
-            <!-- Mostrar error (si existe) -->
             {% if error %}
             <p class="error-msg">{{ error }}</p>
             {% endif %}
@@ -51,7 +49,7 @@
 
     fileInput.addEventListener("change", () => {
         if (fileInput.files.length > 0) {
-            fileNameDisplay.textContent = fileInput.files[0].name;
+            fileNameDisplay.textContent = "📄 " + fileInput.files[0].name;
             fileNameDisplay.classList.remove("error");
         } else {
             fileNameDisplay.textContent = "";
@@ -60,7 +58,150 @@
 
     // Mostrar animación al enviar
     document.querySelector(".upload-form").addEventListener("submit", () => {
-        processBtn.innerHTML = '<span class="loader"></span>';
+        processBtn.innerHTML = '<span class="loader"></span> Procesando...';
     });
 </script>
+{% endblock %}
+
+{% block extra_styles %}
+<style>
+/* Fondo general */
+.upload-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #e0f2fe 0%, #f0fdfa 100%);
+    font-family: 'Inter', sans-serif;
+}
+
+/* Tarjeta */
+.upload-card {
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    padding: 3rem 2.5rem;
+    text-align: center;
+    width: 90%;
+    max-width: 420px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.upload-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 35px rgba(0,0,0,0.12);
+}
+
+/* Encabezado */
+.upload-icon {
+    font-size: 3rem;
+    margin-bottom: 0.8rem;
+}
+
+.upload-title {
+    margin: 0;
+    color: #1e3a8a;
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.upload-subtitle {
+    font-size: 1.2rem;
+    color: #475569;
+    margin-bottom: 1rem;
+}
+
+.upload-description {
+    color: #64748b;
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+}
+
+/* Selector de archivo */
+.file-input-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 0.8rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.file-label {
+    background: #e0e7ff;
+    color: #1e3a8a;
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.file-label:hover {
+    background: #c7d2fe;
+}
+
+.browse-btn {
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 0.6rem 1.1rem;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background 0.2s ease;
+}
+
+.browse-btn:hover {
+    background: #1d4ed8;
+}
+
+.file-name {
+    margin-top: 1rem;
+    color: #334155;
+    font-weight: 500;
+}
+
+/* Botón de procesar */
+.process-btn {
+    margin-top: 1.5rem;
+    background: #16a34a;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 0.9rem 1.8rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.process-btn:hover {
+    background: #15803d;
+    transform: scale(1.02);
+}
+
+/* Mensajes de error */
+.error-msg {
+    color: #dc2626;
+    font-weight: 600;
+    margin-top: 1rem;
+}
+
+/* Loader animado */
+.loader {
+    border: 3px solid #ffffff;
+    border-top: 3px solid transparent;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    animation: spin 0.8s linear infinite;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 8px;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+</style>
 {% endblock %}
