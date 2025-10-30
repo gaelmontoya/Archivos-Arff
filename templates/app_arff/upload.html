@@ -3,67 +3,64 @@
 {% block title %}Subir ARFF - Visualizador{% endblock %}
 
 {% block content %}
-<div class="upload-container" style="display:flex; justify-content:center; align-items:center; height:100vh; background:linear-gradient(135deg, #eef2ff 0%, #f8fafc 100%); font-family:'Inter', sans-serif;">
-    
-    <div class="upload-card" style="background:#fff; width:420px; padding:2.5rem; border-radius:20px; box-shadow:0 10px 30px rgba(0,0,0,0.1); text-align:center;">
-        
-        <div class="upload-icon" style="font-size:3rem; margin-bottom:1rem;">ARFF</div>
-        <h2 style="font-size:1.6rem; font-weight:600; color:#1e293b; margin-bottom:0.5rem;">Sube el archivo arff</h2>
-        <p class="upload-description" style="color:#64748b; font-size:0.95rem; margin-bottom:2rem;">
+<div class="upload-container">
+    <div class="upload-card">
+        <div class="upload-icon">📁</div>
+        <h1>ARFF</h1>
+        <h2>Sube el archivo arff</h2>
+        <p class="upload-description">
             Formatos soportados: <strong>.arff</strong><br>
             Máximo: 10MB
         </p>
-        
-        <form id="uploadForm" class="upload-form">
-            <div class="file-input-wrapper" style="margin-bottom:1.2rem;">
-                <input type="file" id="arffFile" accept=".arff" class="file-input" style="display:none;">
-                <label for="arffFile" class="file-label" 
-                       style="display:flex; justify-content:center; align-items:center; gap:0.6rem; background:#f1f5f9; border:2px dashed #cbd5e1; color:#334155; padding:1rem; border-radius:12px; cursor:pointer; transition:all 0.3s;">
-                    <span class="file-label-text">Seleccion de un archivo</span>
-                    <span class="file-label-browse" style="background:#2563eb; color:white; padding:0.3rem 0.8rem; border-radius:6px; font-size:0.85rem;">Examinar</span>
+
+        <!-- Formulario funcional -->
+        <form method="post" enctype="multipart/form-data" class="upload-form">
+            {% csrf_token %}
+            <div class="file-input-wrapper">
+                <input type="file" name="file" id="fileInput" accept=".arff" required hidden>
+                <label for="fileInput" class="file-label">
+                    Selección de un archivo
                 </label>
+                <button type="button" class="browse-btn" onclick="document.getElementById('fileInput').click();">
+                    Examinar
+                </button>
             </div>
-            
-            <div id="fileInfo" class="file-info hidden" 
-                 style="display:flex; justify-content:space-between; align-items:center; background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:0.6rem 1rem; margin-bottom:1.2rem;">
-                <span id="fileName" class="file-name" style="font-size:0.9rem; color:#334155; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"></span>
-                <button type="button" id="removeFile" class="remove-btn" 
-                        style="border:none; background:none; color:#ef4444; font-size:1.2rem; cursor:pointer;">×</button>
-            </div>
-            
-            <button type="submit" id="uploadBtn" class="upload-btn" disabled
-                    style="width:100%; background:#2563eb; color:white; padding:0.9rem; border:none; border-radius:10px; font-size:1rem; font-weight:500; cursor:not-allowed; transition:all 0.3s;">
-                <span class="btn-text">Procesar ARFF</span>
-                <div class="loading-spinner hidden" 
-                     style="margin-left:0.5rem; width:16px; height:16px; border:3px solid rgba(255,255,255,0.4); border-top:3px solid #fff; border-radius:50%; animation:spin 1s linear infinite;"></div>
+
+            <!-- Mostrar nombre del archivo -->
+            <div id="fileNameDisplay" class="file-name"></div>
+
+            <!-- Mostrar error (si existe) -->
+            {% if error %}
+            <p class="error-msg">{{ error }}</p>
+            {% endif %}
+
+            <button type="submit" id="processBtn" class="process-btn">
+                Procesar ARFF
             </button>
         </form>
-        
-        <div id="message" class="message hidden" 
-             style="margin-top:1.2rem; font-size:0.95rem; color:#334155;"></div>
     </div>
 </div>
-
-<style>
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-.file-label:hover {
-  background:#e2e8f0;
-  border-color:#2563eb;
-}
-.upload-btn.enabled {
-  cursor:pointer !important;
-  background:#2563eb !important;
-}
-.upload-btn.enabled:hover {
-  background:#1d4ed8 !important;
-}
-</style>
-
 {% endblock %}
 
 {% block scripts %}
-<script src="/static/js/upload.js"></script>
+<script>
+    // Mostrar nombre del archivo seleccionado
+    const fileInput = document.getElementById("fileInput");
+    const fileNameDisplay = document.getElementById("fileNameDisplay");
+    const processBtn = document.getElementById("processBtn");
+
+    fileInput.addEventListener("change", () => {
+        if (fileInput.files.length > 0) {
+            fileNameDisplay.textContent = fileInput.files[0].name;
+            fileNameDisplay.classList.remove("error");
+        } else {
+            fileNameDisplay.textContent = "";
+        }
+    });
+
+    // Mostrar animación al enviar
+    document.querySelector(".upload-form").addEventListener("submit", () => {
+        processBtn.innerHTML = '<span class="loader"></span>';
+    });
+</script>
 {% endblock %}
